@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import produce from 'immer';
 
 const numberRows = 40
 const numberCols = 40
@@ -29,7 +30,15 @@ function App() {
           border: "1px solid black",
           width: 20,
           height: 20
-        }}>
+        }}
+        onClick={() => {
+          // Creates an immutable change and generates a new grid
+          const newGrid = produce(grid, gridCopy => {
+            gridCopy[i][k] = 1
+          });
+          setGrid(newGrid)
+        }}
+        >
         </div>
       )))}
     </div>
