@@ -15,7 +15,11 @@ function App() {
   });
   
   return (
-    <div>
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: `repeat(${numberCols}, 20px)`
+    }}
+    >
       {/* have to map twice because rows is an array */}
       {grid.map((rows, i) => rows.map((col, k) => (
         <div 
