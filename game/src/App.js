@@ -61,7 +61,7 @@ function App() {
         }
       })
     })
-    setTimeout(activeSim, 1000)
+    setTimeout(activeSim, 100)
   }, [])
   
   return (
