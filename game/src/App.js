@@ -15,6 +15,15 @@ const ops = [
   [-1, -1]
 ]
 
+const clearGrid = () => {
+  const rows = [];
+    for (let i = 0; i < numberRows; i++) {
+      // pushing column to rows array; all values in array init to 0(dead)
+      rows.push(Array.from(Array(numberCols), () => 0))
+    }
+    return rows
+}
+
 function App() {
   // useState will only run once with function
   const [grid, setGrid] = useState(() => {
@@ -72,7 +81,21 @@ function App() {
           activeRef.current = true
           activeSim()
         }
-      }}>{active ? 'stop' : 'start'}</button>
+      }}>{active ? 'stop' : 'start'}
+      </button>
+      <button onClick={() => {
+        setGrid(clearGrid())
+      }}>
+        clear
+      </button>
+      <button onClick={() => {
+        const rows = [];
+        for (let i = 0; i < numberRows; i++) {
+          // pushing column to rows array; all values in array init to 0(dead)
+          rows.push(Array.from(Array(numberCols), () => Math.random() > .4))
+        }
+        setGrid(rows)
+      }}>random</button>
       <div style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${numberCols}, 20px)`
