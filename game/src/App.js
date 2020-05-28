@@ -16,8 +16,11 @@ function App() {
   
   return (
     <div>
+      {/* have to map twice because rows is an array */}
       {grid.map((rows, i) => rows.map((col, k) => (
-        <div style={{
+        <div 
+        key={`${i}-${k}`}
+        style={{
           backgroundColor: grid[i][k] ? "blue" : undefined,
           border: "1px solid black",
           width: 20,
