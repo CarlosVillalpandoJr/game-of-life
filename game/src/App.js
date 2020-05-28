@@ -1,8 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import produce from 'immer';
 
-const numberRows = 40
-const numberCols = 40
+const numberRows = 20
+const numberCols = 30
 
 const ops = [
   [0, 1],
@@ -75,6 +75,13 @@ function App() {
   
   return (
     <>
+      <h1>Game of Life</h1>
+      <h2>Rules:</h2>
+      <ol>
+        <li>Any live cell with two or three live neighbours survives</li>
+        <li>Any dead cell with three live neighbours becomes a live cell.</li>
+        <li>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</li>
+      </ol>
       <button onClick={() => {
         setActive(!active)
         if(!active) {
