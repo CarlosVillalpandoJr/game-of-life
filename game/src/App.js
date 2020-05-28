@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import produce from 'immer';
 
 const numberRows = 40
@@ -7,11 +7,11 @@ const numberCols = 40
 const ops = [
   [0, 1],
   [0, -1],
-  [1, -1]
-  [-1, 1]
-  [1, 0]
-  [-1, 0]
-  [1, 1]
+  [1, -1],
+  [-1, 1],
+  [1, 0],
+  [-1, 0],
+  [1, 1],
   [-1, -1]
 ]
 
@@ -33,27 +33,45 @@ function App() {
   activeRef.current = active
 
   const activeSim = useCallback(() => {
-    if(!active.current) {
+    if(!activeRef.current) {
       return;
     }
 
     setGrid(g => {
+      // produce 'produces' and new grid and updates the grid
       return produce(g, gridCopy => {
+        // double for loop going through every cell of grid
         for(let i = 0; i < numberRows; i++) {
           for(let k = 0; k < numberCols; k++) {
+            // checking the number of neighbors each cell has
             let neighbors = 0;
-
+            ops.forEach(([x, y]) => {
+              const newI = i + x;
+              const newK = k + x
+                if (newI >= 0 && newI < numberRows && newK >= 0 && newK < numberCols) {
+                  neighbors += g[newI][newK]
+                }
+            })
+            if (neighbors < 2 || neighbors > 3) {
+              gridCopy[i][k] = 0
+            } else if (g[i][k] === 0 && neighbors === 3) {
+              gridCopy[i][k] = 1
+            }
           }
         }
       })
     })
-
-  })
+    setTimeout(activeSim, 1000)
+  }, [])
   
   return (
     <>
       <button onClick={() => {
         setActive(!active)
+        if(!active) {
+          activeRef.current = true
+          activeSim()
+        }
       }}>{active ? 'stop' : 'start'}</button>
       <div style={{
         display: 'grid',
