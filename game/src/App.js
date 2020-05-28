@@ -47,7 +47,7 @@ function App() {
             let neighbors = 0;
             ops.forEach(([x, y]) => {
               const newI = i + x;
-              const newK = k + x
+              const newK = k + y
                 if (newI >= 0 && newI < numberRows && newK >= 0 && newK < numberCols) {
                   neighbors += g[newI][newK]
                 }
