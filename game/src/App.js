@@ -36,6 +36,7 @@ function App() {
   });
 
   const [active, setActive] = useState(false)
+  const [generations, setGenerations] = useState(0)
 
   // using useRef to be able to use the current value of active in function
   const activeRef = useRef(active)
@@ -70,11 +71,12 @@ function App() {
         }
       })
     })
+    setGenerations(generations + 1)
     setTimeout(activeSim, 100)
   }, [])
   
   return (
-    <>
+    <div>
       <h1>Game of Life</h1>
       <h2>Rules:</h2>
       <ol>
@@ -82,6 +84,7 @@ function App() {
         <li>Any dead cell with three live neighbours becomes a live cell.</li>
         <li>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</li>
       </ol>
+      <p>generations: {generations}</p>
       <button onClick={() => {
         setActive(!active)
         if(!active) {
@@ -129,7 +132,7 @@ function App() {
           </div>
         )))}
       </div>
-    </>
+    </div>
   );
 }
 
