@@ -92,7 +92,7 @@ function App() {
         const rows = [];
         for (let i = 0; i < numberRows; i++) {
           // pushing column to rows array; all values in array init to 0(dead)
-          rows.push(Array.from(Array(numberCols), () => Math.random() > .4))
+          rows.push(Array.from(Array(numberCols), () => Math.random() > .5))
         }
         setGrid(rows)
       }}>random</button>
