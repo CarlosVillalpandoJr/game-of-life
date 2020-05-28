@@ -4,6 +4,17 @@ import produce from 'immer';
 const numberRows = 40
 const numberCols = 40
 
+const ops = [
+  [0, 1],
+  [0, -1],
+  [1, -1]
+  [-1, 1]
+  [1, 0]
+  [-1, 0]
+  [1, 1]
+  [-1, -1]
+]
+
 function App() {
   // useState will only run once with function
   const [grid, setGrid] = useState(() => {
@@ -31,7 +42,7 @@ function App() {
         for(let i = 0; i < numberRows; i++) {
           for(let k = 0; k < numberCols; k++) {
             let neighbors = 0;
-            
+
           }
         }
       })
