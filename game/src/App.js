@@ -34,7 +34,7 @@ function App() {
         onClick={() => {
           // Creates an immutable change and generates a new grid
           const newGrid = produce(grid, gridCopy => {
-            gridCopy[i][k] = 1
+            gridCopy[i][k] = grid[i][k] ? 0 : 1
           });
           setGrid(newGrid)
         }}
