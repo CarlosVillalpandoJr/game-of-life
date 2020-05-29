@@ -37,10 +37,14 @@ function App() {
 
   const [active, setActive] = useState(false)
   const [generations, setGenerations] = useState(0)
+  const [speed, setSpeed] = useState(1000)
 
   // using useRef to be able to use the current value of active in function
   const activeRef = useRef(active)
   activeRef.current = active
+
+  const speedRef = useRef(speed);
+  speedRef.current = speed
 
   const activeSim = useCallback(() => {
     if(!activeRef.current) {
@@ -48,7 +52,7 @@ function App() {
     }
 
     setGrid(g => {
-      // produce 'produces' and new grid and updates the grid
+      // produce 'produces' the new grid and updates the grid without directly mutating grid state
       return produce(g, gridCopy => {
         // double for loop going through every cell of grid
         for(let i = 0; i < numberRows; i++) {
@@ -58,11 +62,14 @@ function App() {
             ops.forEach(([x, y]) => {
               const newI = i + x;
               const newK = k + y
+              // checking bounds
                 if (newI >= 0 && newI < numberRows && newK >= 0 && newK < numberCols) {
                   neighbors += g[newI][newK]
                 }
             })
+            // logic for rules, determines if cells become 0 or 1 or nothing
             if (neighbors < 2 || neighbors > 3) {
+              // mutating grid copy with update grid value
               gridCopy[i][k] = 0
             } else if (g[i][k] === 0 && neighbors === 3) {
               gridCopy[i][k] = 1
@@ -71,9 +78,14 @@ function App() {
         }
       })
     })
-    setGenerations(generations + 1)
-    setTimeout(activeSim, 100)
+    console.log('in function', speed)
+    setTimeout(activeSim, speedRef.current)
   }, [])
+
+  const handleChange = event => {
+    setSpeed(event.target.value)
+  }
+
   
   return (
     <div>
@@ -106,6 +118,15 @@ function App() {
         }
         setGrid(rows)
       }}>random</button>
+    
+      <input
+        name='speed'
+        onChange={handleChange} 
+        placeholder='Change Speed' 
+        value={speed.value}
+      />
+    
+      
       <div style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${numberCols}, 20px)`
